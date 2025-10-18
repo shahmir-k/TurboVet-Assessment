@@ -23,6 +23,10 @@ npx nx serve api
 npx nx serve turbovet_shahmir_khan
 ```
 
+![Login Page](login.png)
+![Light Mode](lightmode.png)
+![Dark Mode](darkmode.png)
+
 ## Everything below is AI-Generated slop explainations
 
 # TurboVet Task Management System
