@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global custom styles */
+body {
+  @apply bg-gray-50 text-gray-900 transition-colors duration-200;
+}
+
+.dark body {
+  @apply bg-gray-900 text-gray-100;
+}
+
+/* Dark mode overrides */
+.dark {
+  color-scheme: dark;
+}

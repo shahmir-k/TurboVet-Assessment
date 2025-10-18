@@ -1,0 +1,171 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <!-- To Do Column -->
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow transition-colors duration-200">
+    <div class="px-4 py-3 bg-gray-100 dark:bg-gray-700 rounded-t-lg border-b border-gray-200 dark:border-gray-600">
+      <h3 class="font-semibold text-gray-900 dark:text-gray-100">To Do</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400">{{ todoTasks.length }} tasks</p>
+    </div>
+    <div
+      cdkDropList
+      id="todo-list"
+      [cdkDropListData]="todoTasks"
+      [cdkDropListConnectedTo]="['in-progress-list', 'done-list']"
+      (cdkDropListDropped)="drop($event, 'todo')"
+      class="min-h-[400px] p-4 space-y-3"
+    >
+      @for (task of todoTasks; track task.id) {
+        <div
+          cdkDrag
+          [cdkDragDisabled]="!canEdit"
+          [class]="canEdit ? 'bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4 shadow-sm hover:shadow-md transition-all cursor-move' : 'bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-4 shadow-sm hover:shadow-md transition-all cursor-default'"
+        >
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-semibold text-gray-900 dark:text-gray-100">{{ task.title }}</h4>
+            <span
+              [class]="getCategoryClass(task.category)"
+              class="px-2 py-1 rounded text-xs font-medium"
+            >
+              {{ task.category }}
+            </span>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">{{ task.description }}</p>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-gray-500 dark:text-gray-400">Priority: {{ task.priority }}</span>
+            </div>
+            @if (canEdit) {
+              <div class="flex gap-2">
+                <button
+                  (click)="editTask.emit(task)"
+                  class="text-blue-600 hover:text-blue-800 text-sm"
+                >
+                  Edit
+                </button>
+                <button
+                  (click)="deleteTask.emit(task.id)"
+                  class="text-red-600 hover:text-red-800 text-sm"
+                >
+                  Delete
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- In Progress Column -->
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow transition-colors duration-200">
+    <div class="px-4 py-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-t-lg border-b border-yellow-200 dark:border-yellow-700">
+      <h3 class="font-semibold text-gray-900 dark:text-gray-100">In Progress</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400">{{ inProgressTasks.length }} tasks</p>
+    </div>
+    <div
+      cdkDropList
+      id="in-progress-list"
+      [cdkDropListData]="inProgressTasks"
+      [cdkDropListConnectedTo]="['todo-list', 'done-list']"
+      (cdkDropListDropped)="drop($event, 'in_progress')"
+      class="min-h-[400px] p-4 space-y-3"
+    >
+      @for (task of inProgressTasks; track task.id) {
+        <div
+          cdkDrag
+          [cdkDragDisabled]="!canEdit"
+          [class]="canEdit ? 'bg-white dark:bg-gray-700 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 shadow-sm hover:shadow-md transition-all cursor-move' : 'bg-white dark:bg-gray-700 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 shadow-sm hover:shadow-md transition-all cursor-default'"
+        >
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-semibold text-gray-900 dark:text-gray-100">{{ task.title }}</h4>
+            <span
+              [class]="getCategoryClass(task.category)"
+              class="px-2 py-1 rounded text-xs font-medium"
+            >
+              {{ task.category }}
+            </span>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">{{ task.description }}</p>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-gray-500 dark:text-gray-400">Priority: {{ task.priority }}</span>
+            </div>
+            @if (canEdit) {
+              <div class="flex gap-2">
+                <button
+                  (click)="editTask.emit(task)"
+                  class="text-blue-600 hover:text-blue-800 text-sm"
+                >
+                  Edit
+                </button>
+                <button
+                  (click)="deleteTask.emit(task.id)"
+                  class="text-red-600 hover:text-red-800 text-sm"
+                >
+                  Delete
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Done Column -->
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow transition-colors duration-200">
+    <div class="px-4 py-3 bg-green-50 dark:bg-green-900/30 rounded-t-lg border-b border-green-200 dark:border-green-700">
+      <h3 class="font-semibold text-gray-900 dark:text-gray-100">Done</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400">{{ doneTasks.length }} tasks</p>
+    </div>
+    <div
+      cdkDropList
+      id="done-list"
+      [cdkDropListData]="doneTasks"
+      [cdkDropListConnectedTo]="['todo-list', 'in-progress-list']"
+      (cdkDropListDropped)="drop($event, 'done')"
+      class="min-h-[400px] p-4 space-y-3"
+    >
+      @for (task of doneTasks; track task.id) {
+        <div
+          cdkDrag
+          [cdkDragDisabled]="!canEdit"
+          [class]="canEdit ? 'bg-white dark:bg-gray-700 border border-green-200 dark:border-green-700 rounded-lg p-4 shadow-sm hover:shadow-md transition-all cursor-move opacity-75' : 'bg-white dark:bg-gray-700 border border-green-200 dark:border-green-700 rounded-lg p-4 shadow-sm hover:shadow-md transition-all cursor-default opacity-75'"
+        >
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="font-semibold text-gray-900 dark:text-gray-100 line-through">{{ task.title }}</h4>
+            <span
+              [class]="getCategoryClass(task.category)"
+              class="px-2 py-1 rounded text-xs font-medium"
+            >
+              {{ task.category }}
+            </span>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">{{ task.description }}</p>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-gray-500 dark:text-gray-400">Priority: {{ task.priority }}</span>
+            </div>
+            @if (canEdit) {
+              <div class="flex gap-2">
+                <button
+                  (click)="editTask.emit(task)"
+                  class="text-blue-600 hover:text-blue-800 text-sm"
+                >
+                  Edit
+                </button>
+                <button
+                  (click)="deleteTask.emit(task.id)"
+                  class="text-red-600 hover:text-red-800 text-sm"
+                >
+                  Delete
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+

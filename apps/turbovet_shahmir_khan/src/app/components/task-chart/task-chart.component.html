@@ -1,0 +1,63 @@
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+  <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+    Task Completion Overview
+  </h3>
+  
+  <div class="space-y-4">
+    <!-- To Do Bar -->
+    <div>
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">To Do</span>
+        <span class="text-sm text-gray-600 dark:text-gray-400">{{ todoCount }} tasks ({{ todoPercentage }}%)</span>
+      </div>
+      <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
+        <div 
+          class="bg-gray-500 h-4 rounded-full transition-all duration-500"
+          [style.width.%]="todoPercentage"
+        ></div>
+      </div>
+    </div>
+
+    <!-- In Progress Bar -->
+    <div>
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">In Progress</span>
+        <span class="text-sm text-gray-600 dark:text-gray-400">{{ inProgressCount }} tasks ({{ inProgressPercentage }}%)</span>
+      </div>
+      <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
+        <div 
+          class="bg-yellow-500 h-4 rounded-full transition-all duration-500"
+          [style.width.%]="inProgressPercentage"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Done Bar -->
+    <div>
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Completed</span>
+        <span class="text-sm text-gray-600 dark:text-gray-400">{{ doneCount }} tasks ({{ donePercentage }}%)</span>
+      </div>
+      <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
+        <div 
+          class="bg-green-500 h-4 rounded-full transition-all duration-500"
+          [style.width.%]="donePercentage"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+    <div class="flex justify-between items-center">
+      <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Total Tasks</span>
+      <span class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ totalTasks }}</span>
+    </div>
+    <div class="flex justify-between items-center mt-2">
+      <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Completion Rate</span>
+      <span class="text-lg font-semibold text-green-600 dark:text-green-400">{{ donePercentage }}%</span>
+    </div>
+  </div>
+</div>
+
+
